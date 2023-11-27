@@ -1,0 +1,30 @@
+html body{
+    overflow-x: hidden;
+}
+.aside {
+    display: flex;
+    width: 20rem;
+    height: 39em;
+    background-color: #e0e0e0;
+}
+/* .iamge{
+    width: 350px;
+    height:240px;
+}
+.card{
+    width: 400px;
+    height:440px;
+} */
+ .card-img{
+    width: 450px;
+    height: 100px;
+} 
+a{
+    text-decoration: none;
+    color: black;
+  
+}
+.table{
+    margin-left: 90px;
+    margin-top: 50px;
+}

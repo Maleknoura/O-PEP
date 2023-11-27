@@ -1,0 +1,19 @@
+html body{
+    overflow-x: hidden;
+}
+/* *{
+    background: url(../images/back.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+} */
+.button3{
+    background-color: #2a9234;
+    border: none;
+    margin-right: 300px;
+    margin-top: 20px;
+    width: 180px;
+    height: 30px;
+    border-radius: 5px;
+}
