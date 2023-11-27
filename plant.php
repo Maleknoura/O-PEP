@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete_product"])) {
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <title>categorie</title>
+    <title>Document</title>
    
 </head>
 
@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete_product"])) {
             <ul class="d-flex flex-column d-flex p-4 m-4 gap-5">
                 <li><a href="admin.php" class="text-dark fs-7 fw-bold text-decoration-none"><i class='bx bxs-grid-alt'></i>Dashboard</a></li>
                 <li><a href="plant.php" class="text-dark fs-7 fw-bold text-decoration-none"><i class='bx bxs-shopping-bag-alt'></i>Products</a></li>
-                <li><a href="categories.php" class="text-dark fs-7 fw-bold text-decoration-none"><i class='bx bxs-shopping-bag-alt'></i>categories</a></li>
+                <li><a href="category.php" class="text-dark fs-7 fw-bold text-decoration-none"><i class='bx bxs-shopping-bag-alt'></i>categories</a></li>
                 <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i
                                     class="material-icons">&#xE147;</i> <span>Add new product</span></a>
     
@@ -98,24 +98,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete_product"])) {
                                 </td>
                             </tr>
 
-                            <!-- Modal -->
-                            <!-- <div class="modal fade" id="exampleModal-<?= $planteId ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content rounded-4">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title titre" id="exampleModalLabel">You Want To Delete This Product?</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body d-flex justify-content-center p-5 gap-4">
-                                            <form method="post">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <input type="hidden" name="id_product" value="<?= $planteId ?>">
-                                                <button type="submit" name="delete_product" class="btn btn-danger" onclick="launch_toast()">Delete</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
                         <?php
                         }
                         ?>

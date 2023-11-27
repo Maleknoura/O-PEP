@@ -66,8 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_form"])) {
 
 
                                         <div class="form-group">
-    <label for="image">Image</label>
-    <input name="image" type="file" class="form-control">
+                                        <label for="image">Image</label>
+                                         <input name="image" type="file" class="form-control">
 </div>
                                     </div>
                                     <div class="row justify-content-end">
