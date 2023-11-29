@@ -3,7 +3,7 @@ include "config.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES["productImg"])) {
-        // checkFileError();
+        checkFileError();
         insertProduct();
         // header("location: admin.php");
     }
@@ -42,38 +42,13 @@ function checkFileError()
     }
 }
 
-// function insertProduct()
-// {    global $conn; // Assuming you have a MySQLi connection named $conn
-//     // print_r($_FILES);
-//     // die();
-//     $name = $_POST["productName"];
-//     $prix = $_POST["product_price"];
-//     $categorieId = $_POST["category"];
-//     $image = $_FILES["productImg"]["tmp_name"];
-
-
-
-//     // Prepare the SQL statement
-//     $query = "INSERT INTO plante (name, prix, image, categorieId) VALUES (?, ?, ?, ?)";
-//     $stmt = $conn->prepare($query);
-
-//     // Bind parameters
-//     $stmt->bind_param('sisi', $name, $prix,$image, $categorieId);
-
-//     // Execute the statement
-//     $stmt->execute();
-
-//     // Close the statement
-//     $stmt->close();
-// }
-
 function insertProduct()
 {
     global $conn; // Assuming you have a MySQLi connection named $conn
-    $img = $_FILES['productImg']['name'];
-    $size = $_FILES['productImg']['size'];
-    $tmp_name = $_FILES['productImg']['tmp_name'];
-    $error = $_FILES['productImg']['error'];
+    $img = $_FILES['productImg1']['name'];
+    $size = $_FILES['productImg1']['size'];
+    $tmp_name = $_FILES['productImg1']['tmp_name'];
+    $error = $_FILES['productImg1']['error'];
 
     $name = $_POST["productName"];
     $prix = $_POST["product_price"];
@@ -101,21 +76,21 @@ function insertProduct()
             }
         }
     } else {
-        $msg[] = 'Unkown error occured';
+        $msg[] = 'Unknown error occurred';
         exit;
     }
 
     // Prepare the SQL statement
-    $query = "INSERT INTO plante (name, prix, image, categorieID) VALUES (?, ?, ?, ?)";
+    $query = "INSERT INTO categorie (nom,img,prix) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($query);
 
     // Bind parameters
-    $stmt->bind_param('sisi', $name, $prix, $new_img_name, $categorieId); // Change 'sisi' to 'sibs'
+    $stmt->bind_param('ssii', $name, $new_img_name, $prix,$categorieId); // Change 'sisi' to 'sss'
 
     // Execute the statement
     $stmt->execute();
 
     // Close the statement
     $stmt->close();
-    header("location: plant.php");
 }
+?>

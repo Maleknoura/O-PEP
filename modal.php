@@ -2,8 +2,8 @@
 include "config.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_FILES["productImg"])) {
-        // checkFileError();
+    if (isset($_FILES["productImg1"])) {
+        checkFileError();
         insertProduct();
         // header("location: admin.php");
     }
@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 function checkFileError()
 {
-    switch ($_FILES['productImg']['error']) {
+    switch ($_FILES['productImg1']['error']) {
         case UPLOAD_ERR_OK:
             echo 'File is valid, and was successfully uploaded.';
             break;
@@ -42,51 +42,25 @@ function checkFileError()
     }
 }
 
-// function insertProduct()
-// {    global $conn; // Assuming you have a MySQLi connection named $conn
-//     // print_r($_FILES);
-//     // die();
-//     $name = $_POST["productName"];
-//     $prix = $_POST["product_price"];
-//     $categorieId = $_POST["category"];
-//     $image = $_FILES["productImg"]["tmp_name"];
-
-
-
-//     // Prepare the SQL statement
-//     $query = "INSERT INTO plante (name, prix, image, categorieId) VALUES (?, ?, ?, ?)";
-//     $stmt = $conn->prepare($query);
-
-//     // Bind parameters
-//     $stmt->bind_param('sisi', $name, $prix,$image, $categorieId);
-
-//     // Execute the statement
-//     $stmt->execute();
-
-//     // Close the statement
-//     $stmt->close();
-// }
-
 function insertProduct()
 {
-    global $conn; // Assuming you have a MySQLi connection named $conn
-    $img = $_FILES['productImg']['name'];
-    $size = $_FILES['productImg']['size'];
-    $tmp_name = $_FILES['productImg']['tmp_name'];
-    $error = $_FILES['productImg']['error'];
+    global $conn;
 
-    $name = $_POST["productName"];
-    $prix = $_POST["product_price"];
-    $categorieId = $_POST["category"];
+    $img = $_FILES['productImg1']['name'];
+    $size = $_FILES['productImg1']['size'];
+    $tmp_name = $_FILES['productImg1']['tmp_name'];
+    $error = $_FILES['productImg1']['error'];
+
+    $name = $_POST["productName1"];
+    $prix = $_POST["product_price1"];
+    $categorieId = $_POST["category1"];
 
     if ($error === 0) {
         if ($size > 4200000) {
-            echo 'Sorry your file is too large. (max 4mb)';
+            echo 'Sorry, your file is too large. (max 4mb)';
             exit;
         } else {
-            echo $name;
             $img_ext = pathinfo($img, PATHINFO_EXTENSION);
-            echo $img_ext;
             $img_ext_lc = strtolower($img_ext);
 
             $allowed_ext = array("jpg", "jpeg", "png", "webp", "avif");
@@ -101,21 +75,22 @@ function insertProduct()
             }
         }
     } else {
-        $msg[] = 'Unkown error occured';
+        $msg[] = 'Unknown error occurred';
         exit;
     }
 
     // Prepare the SQL statement
-    $query = "INSERT INTO plante (name, prix, image, categorieID) VALUES (?, ?, ?, ?)";
+    $query = "INSERT INTO categorie (nom, img, prix) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($query);
 
     // Bind parameters
-    $stmt->bind_param('sisi', $name, $prix, $new_img_name, $categorieId); // Change 'sisi' to 'sibs'
+    $stmt->bind_param('sss', $name, $new_img_name, $prix);
 
     // Execute the statement
     $stmt->execute();
 
     // Close the statement
     $stmt->close();
-    header("location: plant.php");
+    header("location: category.php");
 }
+?>

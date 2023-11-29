@@ -33,15 +33,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete_product"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="css/Categories.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-GLhlTQ8iK7l5lOpHvqZMFPeJUu78E+5WEMRN/RVHQ6sds9bpOyFSp3yVmwE+8mg" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtFZj5me1TDA" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-GLhlTQ8iK7l5lOpHvqZMFPeJUu78E+5WEMRN/RVHQ6sds9bpOyFSp3yVmwE+8mg" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtFZj5me1TDA" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <!-- css links-->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <title>Document</title>
-   
+
 </head>
 
 <body>
@@ -51,17 +51,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete_product"])) {
                 <li><a href="admin.php" class="text-dark fs-7 fw-bold text-decoration-none"><i class='bx bxs-grid-alt'></i>Dashboard</a></li>
                 <li><a href="plant.php" class="text-dark fs-7 fw-bold text-decoration-none"><i class='bx bxs-shopping-bag-alt'></i>Products</a></li>
                 <li><a href="category.php" class="text-dark fs-7 fw-bold text-decoration-none"><i class='bx bxs-shopping-bag-alt'></i>categories</a></li>
-                <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i
-                                    class="material-icons">&#xE147;</i> <span>Add new product</span></a>
-    
+
+
             </ul>
         </div>
-    <div>
-        
-    </div>
-    <div>
-         <!-- <a href="add.php?id=<?= $planteId ?>" class="btn btn-success" mt-5 data-bs-toggle="" data-bs-target="#exampleModal-<?= $planteId ?>"> +add</a> -->
-    </div>
+        <div>
+
+        </div>
+        <div>
+            <!-- <a href="add.php?id=<?= $planteId ?>" class="btn btn-success" mt-5 data-bs-toggle="" data-bs-target="#exampleModal-<?= $planteId ?>"> +add</a> -->
+        </div>
+        <div>
+            <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal" style="position: absolute; top: 10px; right: 20px; "><i
+                                    class=" material-icons">&#xE147;</i> <span>Add new product</span></a>
+        </div>
         <div>
             <?php
             if ($resultatPlante->num_rows > 0) {
@@ -82,19 +85,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete_product"])) {
                             $planteId = $rowPlante["planteId"];
                             $namePlante = $rowPlante["name"];
                             $image = $rowPlante["image"];
-                            $id_pn = $rowPlante["id_pn"];
+                            $categorieID = $rowPlante["categorieID"];
                         ?>
                             <tr>
                                 <th scope="row"><?php echo $planteId; ?></th>
                                 <td><img class=" card-img  " src="images/<?php echo $image; ?>" /></td>
                                 <td><?php echo $namePlante; ?></td>
-                                <td><?php echo $id_pn; ?></td>
+                                <td><?php echo $categorieID; ?></td>
                                 <td>
                                     <a href="delete.php?id=<?= $planteId ?>" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal-<?= $planteId ?>">Delete</a>
                                     <a href="edit.php?id=<?= $planteId ?>" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal-<?= $planteId ?>">Update</a>
 
-                                    
-                                    
+
+
                                 </td>
                             </tr>
 
@@ -127,16 +130,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete_product"])) {
                             <label>Price</label>
                             <input name="product_price" type="text" class="form-control" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="category">category</label>
                             <select id="category" name="category">
-                               <OPTIon>1</OPTIon>
-                               <OPTIon>2</OPTIon>
-                               <OPTIon>3</OPTIon>
-                               <OPTIon>4</OPTIon>
+                                <OPTIon>1</OPTIon>
+                                <OPTIon>2</OPTIon>
+                                <OPTIon>3</OPTIon>
+                                <OPTIon>4</OPTIon>
                             </select>
-                        </div> 
+                        </div>
                         <div class="form-group">
                             <label>image</label>
                             <input name="productImg" type="file" class="form-control" required>

@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->query($sql) === TRUE) {
         session_start();
         $_SESSION["email"] = $email;
-        header("location: role.php");
+        header("location: login.php");
         exit();
     } else {
         echo "Erreur : " . $sql . "<br>" . $conn->error;

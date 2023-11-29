@@ -160,6 +160,7 @@ if (isset($_POST['cart'])) {
     </div>
     <div>
         <div class=" mt-4">
+            <h2 class="text-center" style="color: #bebebe;">Our Plants</h2>
             <div class="container mt-5">
             <div class="row d-flex justify-content-between align-items-center">
             <?php
@@ -229,45 +230,6 @@ if (isset($_POST['cart'])) {
                 </div>
             </div>
         </div>
-        <div class=" mt-4">
-        <h2 class="text-center" style="color: #bebebe;">Our Categories</h2>
-        <div class="container mt-5 style=" right: 240px; ">
-        <div class=" row d-flex justify-content-between align-items-center">
-            <?php
-
-
-
-            if ($resultatCategories->num_rows > 0) {
-                while ($rowCategorie = $resultatCategories->fetch_assoc()) {
-                    $nomCategorie = $rowCategorie["nom"];
-                    $saisonCroissance = $rowCategorie["saison_croisssance"];
-                    $besoinSpecifique = $rowCategorie["besoin_specifiques"];
-                    $img = $rowCategorie["img"];
-
-            ?>
-                    <div class="col-xl-5 col-lg-3 col-md-5 col-sm-9 mx-auto mt-3 my-2 ">
-                        <div class="card" style="width: 17rem;height:20rem; border: none; border-radius: 10px; box-shadow: 0px 3px 5px 0px #010101;">
-                            <div class="card-body">
-                                <div class="col-md-1"></div>
-                                <h5 class="card-title text-center mt-2"><?php echo $nomCategorie; ?></h5>
-                                <img class=" card-img w-100  " src="<?php echo $img; ?>" />
-
-                                <p class="card-text text-center mt-4">
-                                    Saison de Croissance : <?php echo $saisonCroissance; ?><br>
-                                    Besoin Spécifique : <?php echo $besoinSpecifique; ?>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-            <?php
-                }
-            } else {
-                echo "Aucune catégorie n'a été trouvée.";
-            }
-            ?>
-        </div>
-    </div>
-    </div>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
