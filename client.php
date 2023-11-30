@@ -7,14 +7,12 @@ $stmt = $conn->prepare($sql);
 $stmt->execute();
 $resultatCategories = $stmt->get_result();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-   
+
     $sql = "SELECT * FROM categorie";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $resultatCategories = $stmt->get_result();
-} 
-
-elseif (isset($_POST['searchPlante'])) {
+} elseif (isset($_POST['searchPlante'])) {
     $searchPlante = '%' . $_POST['searchPlante'] . '%';
     $sqlPlante = "SELECT * FROM `plante` WHERE name LIKE ?";
     $stmtPlante = $conn->prepare($sqlPlante);
@@ -24,8 +22,11 @@ elseif (isset($_POST['searchPlante'])) {
 }
 
 session_start();
-$id = $_SESSION['IDuser'];
-echo $id;
+
+if (empty($_SESSION['IDuser'])) {
+    $id = $_SESSION['IDuser'];
+    header("Location: login.php");
+}
 
 if (isset($_POST['cart'])) {
     $plantid = $_POST['cart'];
@@ -53,7 +54,7 @@ if (isset($_POST['cart'])) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/style.css?v=<?php echo time(); ?>">
 
 
@@ -70,7 +71,7 @@ if (isset($_POST['cart'])) {
 
 <body>
     <section>
-        <nav class="navbar">
+        <nav class="navbar mx-4">
             <div class="d-flex justify-content-end align-items-center">
                 <div class="logo">
                     <a href="#"><img class="" src="./images/logo.jpg" alt="" width="130px"></a>
@@ -88,20 +89,34 @@ if (isset($_POST['cart'])) {
                     <i class='bx fs-2 bx-cart-add'></i>
                 </button>
             </a>
-            <form action="" method="POST" class="mb-3">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search by plant name" name="searchPlante">
-                <button class="btn btn-outline-secondary" type="submit">Search Plants</button>
-            </div>
-        </form>
+
 
             <div class="burger" id="burger">
                 <i class='bx bx-dots-horizontal-rounded'></i>
             </div>
+
+
+
+
+
+            <div class="flex-shrink-0 dropdown mr-5">
+                <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false">
+                    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                </a>
+                <ul class="dropdown-menu text-small shadow w-25">
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="signout.php">Sign out</a></li>
+                </ul>
+            </div>
         </nav>
 
         <div class="container mt-4">
-       
+
             <div class="row justify-content-center align-items-center">
                 <div class="col-md-6 ">
                     <h2 class="titlecl">All You Need is Plants</h2>
@@ -114,122 +129,131 @@ if (isset($_POST['cart'])) {
         </div>
         </div>
     </section>
+    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-9 mx-auto mt-3 my-2">
+        <form action="" method="POST" class="mb-3">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search by plant name" name="searchPlante" ">
+        <button class=" btn btn-outline-secondary" type="submit">Search Plants</button>
+            </div>
+    </div>
+    </form>
 
 
     <div class=" mt-4">
-            <h2 class="text-center" style="color: #bebebe;">Our Plants</h2>
-            <div class="container mt-5">
-                <div class="row d-flex justify-content-between align-items-center">
-                    <?php
-                    if ($resultatPlante->num_rows > 0) {
-                        while ($rowPlante = $resultatPlante->fetch_assoc()) {
-                            $namePlante = $rowPlante["name"];
-                            $image = $rowPlante["image"];
-
-                            $prix = $rowPlante["prix"];
-                    ?>
-                            <div class="col-xl-3 col-lg-3 col-md-5 col-sm-9 mx-auto mt-3 my-2">
-                                <div class="card" style="width: 17rem; height:20rem; border: none; border-radius: 10px; box-shadow: 0px 3px 5px 0px #010101;">
-                                    <div class="card-body">
-                                        <div class="col-md-1"></div>
-                                        <h5 class="card-title text-center "><?php echo $namePlante; ?></h5>
-                                        <img class="card-img w-100"mt-3 src="images/<?php echo $image; ?>" />
-                                        <p class="card-text text-center mt-2">
-                                            Prix: <?php echo $prix; ?>
-                                        <form action="" method="POST">
-                                            <button class="btn btn-success btnn " name="cart" type="submit" value="<?php echo $rowPlante['planteId'] ?>">Add to Cart</button>
-                                        </form><br>
-
-
-                                        </p>
-
-                                    </div>
-                                </div>
-                            </div>
-                    <?php
-                        }
-                    } else {
-                        echo "Aucun résultat trouvé.";
-                    }
-                    ?>
-                </div>
-
-
-
-
-    </div>
-    <div>
-        <div class=" mt-4">
-            <div class="container mt-5">
+        <h2 class="text-center" style="color: #bebebe;">Our Plants</h2>
+        <div class="container mt-5">
             <div class="row d-flex justify-content-between align-items-center">
-            <?php
-            if ($resultatPlante->num_rows > 0) {
-                while ($rowPlante = $resultatPlante->fetch_assoc()) {
-                    $namePlante = $rowPlante["name"];
-                    $image = $rowPlante["image"];
-                    $prix = $rowPlante["prix"];
-            ?>
-                    <div class="col-xl-3 col-lg-3 col-md-5 col-sm-9 mx-auto mt-3 my-2">
-                        <div class="card" style="width: 17rem; height:20rem; border: none; border-radius: 10px; box-shadow: 0px 3px 5px 0px #010101;">
-                            <div class="card-body">
-                                <div class="col-md-1"></div>
-                                <h5 class="card-title text-center "><?php echo $namePlante; ?></h5>
-                                <img class="card-img w-100 mt-3" src="images/<?php echo $image; ?>" />
-                                <p class="card-text text-center mt-2">
-                                    Prix: <?php echo $prix; ?>
+                <?php
+                if ($resultatPlante->num_rows > 0) {
+                    while ($rowPlante = $resultatPlante->fetch_assoc()) {
+                        $namePlante = $rowPlante["name"];
+                        $image = $rowPlante["image"];
+
+                        $prix = $rowPlante["prix"];
+                ?>
+                        <div class="col-xl-3 col-lg-3 col-md-5 col-sm-9 mx-auto mt-3 my-2">
+                            <div class="card" style="width: 17rem; height:20rem; border: none; border-radius: 10px; box-shadow: 0px 20px 20px 0px #bebebe;">
+                                <div class="card-body">
+                                    <div class="col-md-1"></div>
+                                    <h5 class="card-title text-center "><?php echo $namePlante; ?></h5>
+                                    <img class="card-img w-100" mt-3 src="images/<?php echo $image; ?>" />
+                                    <p class="card-text text-center mt-2">
+                                        Prix: <?php echo $prix; ?>
                                     <form action="" method="POST">
                                         <button class="btn btn-success btnn " name="cart" type="submit" value="<?php echo $rowPlante['planteId'] ?>">Add to Cart</button>
                                     </form><br>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-            <?php
-                }
-            } else {
-                echo "Aucun résultat trouvé.";
-            }
-            ?>
-        </div>
-    </div>
-        </div>
-    </div>
-                    <?php
-                    if ($resultatPlante->num_rows > 0) {
-                        while ($rowPlante = $resultatPlante->fetch_assoc()) {
-                            $namePlante = $rowPlante["name"];
-                            $image = $rowPlante["image"];
-
-                            $prix = $rowPlante["prix"];
-                    ?>
-                            <div class="col-xl-3 col-lg-3 col-md-5 col-sm-9 mx-auto mt-3 my-2">
-                                <div class="card" style="width: 17rem; height:20rem; border: none; border-radius: 10px; box-shadow: 0px 3px 5px 0px #010101;">
-                                    <div class="card-body">
-                                        <div class="col-md-1"></div>
-                                        <h5 class="card-title text-center "><?php echo $namePlante; ?></h5>
-                                        <img class="card-img w-100"mt-3 src="images/<?php echo $image; ?>" />
-                                        <p class="card-text text-center mt-2">
-                                            Prix: <?php echo $prix; ?>
-                                        <form action="" method="POST">
-                                            <button class="btn btn-success btnn " name="cart" type="submit" value="<?php echo $rowPlante['planteId'] ?>">Add to Cart</button>
-                                        </form><br>
 
 
-                                        </p>
+                                    </p>
 
-                                    </div>
                                 </div>
                             </div>
-                    <?php
-                        }
-                    } else {
-                        echo "Aucun résultat trouvé.";
+                        </div>
+                <?php
                     }
-                    ?>
+                } else {
+                    echo "Aucun résultat trouvé.";
+                }
+                ?>
+            </div>
+
+
+
+
+        </div>
+
+        <div>
+            <div class=" mt-4">
+                <div class="container mt-5">
+                    <div class="row d-flex justify-content-between align-items-center">
+                        <?php
+                        if ($resultatPlante->num_rows > 0) {
+                            while ($rowPlante = $resultatPlante->fetch_assoc()) {
+                                $namePlante = $rowPlante["name"];
+                                $image = $rowPlante["image"];
+                                $prix = $rowPlante["prix"];
+                        ?>
+                                <div class="col-xl-3 col-lg-3 col-md-5 col-sm-9 mx-auto mt-3 my-2">
+                                    <div class="card" style="width: 17rem; height:20rem; border: none; border-radius: 10px; box-shadow: 0px 20px 20px 0px #bebebe;">
+                                        <div class="card-body">
+                                            <div class="col-md-1"></div>
+                                            <h5 class="card-title text-center "><?php echo $namePlante; ?></h5>
+                                            <img class="card-img w-100 mt-3" src="images/<?php echo $image; ?>" />
+                                            <p class="card-text text-center mt-2">
+                                                Prix: <?php echo $prix; ?>
+                                            <form action="" method="POST">
+                                                <button class="btn btn-success btnn " name="cart" type="submit" value="<?php echo $rowPlante['planteId'] ?>">Add to Cart</button>
+                                            </form><br>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                        <?php
+                            }
+                        } else {
+                            echo "Aucun résultat trouvé.";
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class=" mt-4">
+        <?php
+        if ($resultatPlante->num_rows > 0) {
+            while ($rowPlante = $resultatPlante->fetch_assoc()) {
+                $namePlante = $rowPlante["name"];
+                $image = $rowPlante["image"];
+
+                $prix = $rowPlante["prix"];
+        ?>
+                <div class="col-xl-3 col-lg-3 col-md-5 col-sm-9 mx-auto mt-3 my-2">
+                    <div class="card" style="width: 17rem; height:20rem; border: none; border-radius: 10px; box-shadow: 0px 3px 5px 0px #010101;">
+                        <div class="card-body">
+                            <div class="col-md-1"></div>
+                            <h5 class="card-title text-center "><?php echo $namePlante; ?></h5>
+                            <img class="card-img w-100" mt-3 src="images/<?php echo $image; ?>" />
+                            <p class="card-text text-center mt-2">
+                                Prix: <?php echo $prix; ?>
+                            <form action="" method="POST">
+                                <button class="btn btn-success btnn " name="cart" type="submit" value="<?php echo $rowPlante['planteId'] ?>">Add to Cart</button>
+                            </form><br>
+
+
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+        <?php
+            }
+        } else {
+            echo "Aucun résultat trouvé.";
+        }
+        ?>
+    </div>
+    </div>
+    </div>
+    <div class=" mt-4">
         <h2 class="text-center" style="color: #bebebe;">Our Categories</h2>
         <div class="container mt-5 style=" right: 240px; ">
         <div class=" row d-flex justify-content-between align-items-center">
@@ -268,9 +292,10 @@ if (isset($_POST['cart'])) {
         </div>
     </div>
     </div>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
 </html>

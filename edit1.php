@@ -45,13 +45,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_form"])) {
     $stmt->bind_param("ssssi", $nom, $new_img_name, $besoin_specifiques, $saison_croissance, $idToUpdate);
 
     if ($stmt->execute()) {
-        header("Location: categories.php");
+        header("Location: category.php");
         exit();
     } else {
         echo "Erreur lors de la mise à jour de la plante.";
     }
 }
-
 
 ?>
 <!DOCTYPE html>

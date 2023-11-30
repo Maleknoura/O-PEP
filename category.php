@@ -7,28 +7,26 @@ $stmt = $conn->prepare($sql);
 $stmt->execute();
 $resultatCategories = $stmt->get_result();
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iK7l5lOpHvqZMFPeJUu78E+5WEMRN/RVHQ6sds9bpOyFSp3yVmwE+8mg" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/Categories.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="css/Categories.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iK7l5lOpHvqZMFPeJUu78E+5WEMRN/RVHQ6sds9bpOyFSp3yVmwE+8mg" crossorigin="anonymous">
-<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-GLhlTQ8iK7l5lOpHvqZMFPeJUu78E+5WEMRN/RVHQ6sds9bpOyFSp3yVmwE+8mg" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtFZj5me1TDA" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-GLhlTQ8iK7l5lOpHvqZMFPeJUu78E+5WEMRN/RVHQ6sds9bpOyFSp3yVmwE+8mg" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtFZj5me1TDA" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <!-- css links-->
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script> --> 
-
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
     <title>Document</title>
+
+
 </head>
 <body>
     
@@ -41,8 +39,8 @@ $resultatCategories = $stmt->get_result();
             </ul>
         </div>
         <div>
-        <a href="modal.php" class="btn btn-success" style="position: absolute; top: 10px; right: 20px; "><i
-                                    class=" material-icons">&#xE147;</i> <span>Add new product</span></a>
+        <a href="#addEmployeeModal2" class="btn btn-success" data-toggle="modal"  style="position: absolute; top: 10px; right: 20px; "><i
+                                    class=" material-icons">&#xE147;</i> <span>Add new category</span></a>
         </div>
         
         <div class=" mt-4">
@@ -87,7 +85,40 @@ $resultatCategories = $stmt->get_result();
         </div>
     </div>
     </div>
+    <div id="addEmployeeModal2" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="./add2.php" method="POST" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add new category</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="name">Name of category</label>
+                            <input name="Name1" id="name" type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>saison_croisssance</label>
+                            <input name="saison" type="text" class="form-control" required>
+                        </div>
 
+                        <div class="form-group">
+                            <label>besoin specifiques</label>
+                            <input name="besoin" type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>image</label>
+                            <input name="productImg1" type="file" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <button type="submit" class="btn btn-success">add</button </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
