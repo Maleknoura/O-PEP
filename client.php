@@ -12,16 +12,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $resultatCategories = $stmt->get_result();
-} elseif (isset($_POST['searchPlante'])) {
-    $searchPlante = '%' . $_POST['searchPlante'] . '%';
-    $sqlPlante = "SELECT * FROM `plante` WHERE name LIKE ?";
-    $stmtPlante = $conn->prepare($sqlPlante);
-    $stmtPlante->bind_param('s', $searchPlante);
-    $stmtPlante->execute();
-    $resultatPlante = $stmtPlante->get_result();
+    if (isset($_POST['searchPlante'])) {
+        $searchPlante = '%' . $_POST['searchPlante'] . '%';
+        $sqlPlante = "SELECT * FROM `plante` WHERE name LIKE ?";
+        $stmtPlante = $conn->prepare($sqlPlante);
+        $stmtPlante->bind_param('s', $searchPlante);
+        $stmtPlante->execute();
+        $resultatPlante = $stmtPlante->get_result();
+    }
 }
 
 session_start();
+
 
 if (empty($_SESSION['IDuser'])) {
     $id = $_SESSION['IDuser'];
@@ -30,6 +32,7 @@ if (empty($_SESSION['IDuser'])) {
 
 if (isset($_POST['cart'])) {
     $plantid = $_POST['cart'];
+    $id = $_SESSION['IDuser'];
     $inserttocart = $conn->prepare("INSERT INTO panier (userId,planteid) VALUES (?,?)");
     $inserttocart->bind_param("ii", $id, $plantid);
     $inserttocart->execute();
