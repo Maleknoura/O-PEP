@@ -56,9 +56,9 @@ if (isset($test)) {
 </head>
 
 <body>
-    <DIV>
+    <!-- <DIV>
         <h3 class="fixed-top text-center mt-3">Join Us To Fall In Love with Gardening </h3>
-    </DIV>
+    </DIV> -->
     <section class="container mt-5">
         <div class=" row d-flex justify-content-center">
             <div class="card" style="width: 18rem;">

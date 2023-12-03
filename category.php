@@ -61,7 +61,7 @@ $resultatCategories = $stmt->get_result();
 
             ?>
                     <div class="col-xl-4 col-lg-3 col-md-5 col-sm-9 mx-auto mt-3 my-2 ">
-                        <div class="card" style="width: 17rem;height:20rem; border: none; border-radius: 10px; box-shadow: 0px 3px 5px 0px #010101;">
+                        <div class="card" style="width: 17rem;height:20rem; border: none; border-radius: 10px; box-shadow: 0px 15px 10px 0px #bebebe;">
                             <div class="card-body">
                                 <div class="col-md-1"></div>
                                 <h5 class="card-title text-center mt-2"><?php echo $nomCategorie; ?></h5>

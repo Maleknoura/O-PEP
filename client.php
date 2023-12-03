@@ -126,7 +126,7 @@ if (isset($_POST['cart'])) {
                     <p class="p1 mt-3">Dive into the calming and invigorating world of plants with our carefully curated collection. At our place, we firmly believe that all you need is plants. They bring a touch of green, a zen atmosphere, and positive energy to your living space.</p>
                 </div>
                 <div class="col-md-6 text-center">
-                    <img class="img1 image-3d" src="./images/pllant3.jpg" alt="Plant Image" class="" w-25>
+                    <img class="img1 " src="./images/pllant3.jpg" alt="Plant Image" class="" w-25>
                 </div>
             </div>
         </div>
@@ -257,44 +257,77 @@ if (isset($_POST['cart'])) {
     </div>
     </div>
     <div class=" mt-4">
-        <h2 class="text-center" style="color: #bebebe;">Our Categories</h2>
-        <div class="container mt-5 style=" right: 240px; ">
-        <div class=" row d-flex justify-content-between align-items-center">
+    <h2 class="text-center" style="color: #bebebe;">Our Categories</h2>
+    <div class="container mt-5" style="right: 240px;">
+        <div class="row d-flex justify-content-between align-items-center">
+        <div class="row d-flex justify-content-around align-items-center">
+        <div class="container">
+            
+    <a href="client.php"<?php echo !isset($_GET['filter']) ? ' class="btn btn-outline-secondary active"' : ' class="btn btn-outline-secondary"'; ?>>View All</a>
+
+    <a href="client.php?filter=herbes"<?php echo isset($_GET['filter']) && $_GET['filter'] == 'herbes' ? ' class="btn btn-outline-secondary active"' : ' class="btn btn-outline-secondary"'; ?>>Herbes Seules</a>
+
+    <a href="client.php?filter=arbres"<?php echo isset($_GET['filter']) && $_GET['filter'] == 'arbres' ? ' class="btn btn-outline-secondary active"' : ' class="btn btn-outline-secondary"'; ?>>Arbres Seuls</a>
+
+   
+</div>
+ 
+
+
+
+            </div>
             <?php
+            // Création de la requête principale sans filtre
+            $sqlCategories = "SELECT * FROM categorie";
 
+            // Ajout du filtre si présent
+            if (isset($_GET['filter'])) {
+                $filter = $_GET['filter'];
+                if ($filter == 'arbres') {
+                    $sqlCategories .= " WHERE categorieID = 1";
+                } elseif ($filter == 'herbes') {
+                    $sqlCategories .= " WHERE categorieID  = 4";
+                }
+            }
 
+            // Exécution de la requête seulement si le filtre n'est pas présent
+            if (!isset($_GET['filter']) || (isset($_GET['filter']) && $_GET['filter'] == 'herbes')) {
+                $stmtCategories = $conn->prepare($sqlCategories);
+                $stmtCategories->execute();
+                $resultatCategories = $stmtCategories->get_result();
 
-            if ($resultatCategories->num_rows > 0) {
-                while ($rowCategorie = $resultatCategories->fetch_assoc()) {
-                    $nomCategorie = $rowCategorie["nom"];
-                    $saisonCroissance = $rowCategorie["saison_croisssance"];
-                    $besoinSpecifique = $rowCategorie["besoin_specifiques"];
-                    $img = $rowCategorie["img"];
-
+                if ($resultatCategories->num_rows > 0) {
+                    while ($rowCategorie = $resultatCategories->fetch_assoc()) {
+                        $nomCategorie = $rowCategorie["nom"];
+                        $saisonCroissance = $rowCategorie["saison_croisssance"];
+                        $besoinSpecifique = $rowCategorie["besoin_specifiques"];
+                        $img = $rowCategorie["img"];
             ?>
-                    <div class="col-xl-5 col-lg-3 col-md-5 col-sm-9 mx-auto mt-3 my-2 ">
-                        <div class="card" style="width: 17rem;height:20rem; border: none; border-radius: 10px; box-shadow: 0px 3px 5px 0px #010101;">
-                            <div class="card-body">
-                                <div class="col-md-1"></div>
-                                <h5 class="card-title text-center mt-2"><?php echo $nomCategorie; ?></h5>
-                                <img class=" card-img w-100  " src="<?php echo $img; ?>" />
-
-                                <p class="card-text text-center mt-4">
-                                    Saison de Croissance : <?php echo $saisonCroissance; ?><br>
-                                    Besoin Spécifique : <?php echo $besoinSpecifique; ?>
-                                </p>
+                        <div class="col-xl-3 col-lg-3 col-md-5 col-sm-9 mx-auto mt-3 my-2 ">
+                            <div class="card" style="width: 17rem;height:20rem; border: none; border-radius: 10px; box-shadow: 0px 20px 20px 0px #bebebe;">
+                                <div class="card-body">
+                                    <div class="col-md-1"></div>
+                                    <h5 class="card-title text-center mt-2"><?php echo $nomCategorie; ?></h5>
+                                    <img class=" card-img w-100  " src="<?php echo $img; ?>" />
+                                    <p class="card-text text-center mt-4">
+                                        Saison de Croissance : <?php echo $saisonCroissance; ?><br>
+                                        Besoin Spécifique : <?php echo $besoinSpecifique; ?>
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
             <?php
+                    }
+                } else {
+                    echo "Aucune catégorie n'a été trouvée.";
                 }
-            } else {
-                echo "Aucune catégorie n'a été trouvée.";
             }
             ?>
         </div>
     </div>
-    </div>
+</div>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
