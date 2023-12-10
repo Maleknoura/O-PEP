@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete_product"])) {
                                 <td><?php echo $categorieID; ?></td>
                                 <td>
                                     <a href="delete.php?id=<?= $planteId ?>" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal-<?= $planteId ?>">Delete</a>
-                                    <a href="edit.php?id=<?= $planteId ?>" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal-<?= $planteId ?>">Update</a>
+                                    <!-- <a href="edit.php?id=<?= $planteId ?>" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal-<?= $planteId ?>">Update</a> -->
 
 
 

@@ -83,14 +83,7 @@ input, select {
  
     font-size: 20px;
 }
-.img1{
-    transform: rotateY(95deg) perspective(900px) translateZ(90px);
-    transition: transform 0.5s ease-in-out;
-    width: 400px;
-    height: 340px;
-   box-shadow: 29px 43px 45px 29px #fff;
-   border-radius: 5px;
-}
+
 
 .titlecl{
     color: #bebebe;

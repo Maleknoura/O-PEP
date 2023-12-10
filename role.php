@@ -4,7 +4,7 @@ include "config.php";
 session_start();
 if ($_SESSION) {
     $email = $_SESSION['email'];
-    $select = $conn->prepare("SELECT userId FROM userr WHERE Email = ?");
+    $select = $conn->prepare("SELECT * FROM userr WHERE Email = ?");
     $select->bind_param("s", $email);
     $select->execute();
     $result = $select->get_result();
@@ -14,32 +14,29 @@ if ($_SESSION) {
 // session_start();
 $_SESSION['IDuser'] = $id;
 
-if (isset($_POST['0'])) {
-    $test = 0;
-} else if (isset($_POST['1'])) {
-    $test = 1;
-}
+// if (isset($_POST['0'])) {
+//     $test = 0;
+// } else if (isset($_POST['1'])) {
+//     $test = 1;
+// }
 
-if (isset($test)) {
-    $updateRequet = $conn->prepare("UPDATE role 
-    INNER JOIN userr ON roleEmail = Email
-    SET role.role_userr = ? 
-    WHERE Email = ?");
-    if (!$updateRequet) {
-        die('Erreur de préparation de la requête : ' . $conn->error);
-    }
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $role = $_POST["role"];
+    $update_query = "UPDATE userr SET roleEmail = ? WHERE userId = ?";
+    $stmt = $conn->prepare($update_query);
+    $stmt->bind_param("ii", $role, $id);
+    $stmt->execute();
+    $select->execute();
+    $result = $select->get_result();
+    $row = $result->fetch_assoc();
 
-    $updateRequet->bind_param("is", $test, $email);
-    $updateRequet->execute();
-
-
-
-    if ($test == 0) {
-
-        header("location: admin.php");
-    } else if ($test == 1) {
+    if ($row['roleEmail'] == 1) {
         header("location: client.php");
-    }
+        exit();
+    } elseif ($row['roleEmail'] == 2) {
+        header("location: admin.php");
+        exit();
+    } 
 }
 ?>
 
@@ -65,7 +62,7 @@ if (isset($test)) {
                 <img src="images/admin.png" class="card-img-top" alt="...">
                 <div class="card-body">
                     <form action="" method="post">
-                        <button class="buttonn" type="submit" name="0">Admin</button>
+                        <button class="buttonn" type="submit" name="role" value="2">Admin</button>
                     </form>
 
                 </div>
@@ -74,7 +71,7 @@ if (isset($test)) {
                 <img src="images/client.png" class="card-img-top" alt="...">
                 <div class="card-body">
                     <form action="" method="post">
-                        <button class="buttonn" type="submit" name="1">Client</button>
+                        <button class="buttonn" type="submit" name="role"value="1" >Client</button>
                     </form>
 
                 </div>

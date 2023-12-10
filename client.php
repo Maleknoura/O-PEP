@@ -125,12 +125,12 @@ if (isset($_POST['cart'])) {
                     <h2 class="titlecl">All You Need is Plants</h2>
                     <p class="p1 mt-3">Dive into the calming and invigorating world of plants with our carefully curated collection. At our place, we firmly believe that all you need is plants. They bring a touch of green, a zen atmosphere, and positive energy to your living space.</p>
                 </div>
-                <div class="col-md-6 text-center">
-                    <img class="img1 " src="./images/pllant3.jpg" alt="Plant Image" class="" w-25>
+                <div class="col-md-4">
+                    <img class="img1 " src="./images/pllant3.jpg" alt="" class="" style="width:40vw ;height:50vh;">
                 </div>
             </div>
         </div>
-        </div>
+        
     </section>
     <div class="col-xl-5 col-lg-5 col-md-5 col-sm-9 mx-auto mt-3 my-2">
         <form action="" method="POST" class="mb-3">
@@ -265,9 +265,9 @@ if (isset($_POST['cart'])) {
             
     <a href="client.php"<?php echo !isset($_GET['filter']) ? ' class="btn btn-outline-secondary active"' : ' class="btn btn-outline-secondary"'; ?>>View All</a>
 
-    <a href="client.php?filter=herbes"<?php echo isset($_GET['filter']) && $_GET['filter'] == 'herbes' ? ' class="btn btn-outline-secondary active"' : ' class="btn btn-outline-secondary"'; ?>>Herbes Seules</a>
+    <a href="client.php?filter=herbes"<?php echo isset($_GET['filter']) && $_GET['filter'] == 'herbes' ? ' class="btn btn-outline-secondary active"' : ' class="btn btn-outline-secondary"'; ?>>Herbes </a>
 
-    <a href="client.php?filter=arbres"<?php echo isset($_GET['filter']) && $_GET['filter'] == 'arbres' ? ' class="btn btn-outline-secondary active"' : ' class="btn btn-outline-secondary"'; ?>>Arbres Seuls</a>
+    <a href="client.php?filter=arbres"<?php echo isset($_GET['filter']) && $_GET['filter'] == 'arbres' ? ' class="btn btn-outline-secondary active"' : ' class="btn btn-outline-secondary"'; ?>>Arbres </a>
 
    
 </div>
@@ -277,10 +277,10 @@ if (isset($_POST['cart'])) {
 
             </div>
             <?php
-            // Création de la requête principale sans filtre
+         
             $sqlCategories = "SELECT * FROM categorie";
 
-            // Ajout du filtre si présent
+            
             if (isset($_GET['filter'])) {
                 $filter = $_GET['filter'];
                 if ($filter == 'arbres') {
@@ -291,7 +291,7 @@ if (isset($_POST['cart'])) {
             }
 
             // Exécution de la requête seulement si le filtre n'est pas présent
-            if (!isset($_GET['filter']) || (isset($_GET['filter']) && $_GET['filter'] == 'herbes')) {
+            if (!isset($_GET['filter']) || (isset($_GET['filter']) && $_GET['filter'] == 'herbes')|| $_GET['filter'] == 'arbres') {
                 $stmtCategories = $conn->prepare($sqlCategories);
                 $stmtCategories->execute();
                 $resultatCategories = $stmtCategories->get_result();
